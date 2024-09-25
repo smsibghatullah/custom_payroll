@@ -125,9 +125,18 @@ class HrEmployee(models.Model):
     external_id = fields.Char(string='External ID', readonly=True, compute='_compute_external_id')
 
     def _compute_external_id(self):
-       for record in self:
-            external_id_record = self.env['ir.model.data'].search([
-                ('model', '=', 'hr.employee'),
-                ('res_id', '=', record.id)
-            ], limit=1)  
-            record.external_id = '__export__.'+external_id_record.name if external_id_record else False
+            for record in self:
+                ir_model_data = self.env['ir.model.data']
+                external_id = ir_model_data.search([('model', '=', 'hr.employee'), ('res_id', '=', record.id)], limit=1)
+                if not external_id:
+                    ir_model_data.create({
+                        'name': 'employee_ext_id_%s' % employee.id,
+                        'model': 'hr.employee',
+                        'res_id': employee.id,
+                        'module': '__export__'
+                    })
+                external_id_record = self.env['ir.model.data'].search([
+                    ('model', '=', 'hr.employee'),
+                    ('res_id', '=', record.id)
+                ], limit=1)  
+                record.external_id = '__export__.'+external_id_record.name if external_id_record else False
