@@ -130,9 +130,9 @@ class HrEmployee(models.Model):
                 external_id = ir_model_data.search([('model', '=', 'hr.employee'), ('res_id', '=', record.id)], limit=1)
                 if not external_id:
                     ir_model_data.create({
-                        'name': 'employee_ext_id_%s' % employee.id,
+                        'name': 'employee_ext_id_%s' % record.id,
                         'model': 'hr.employee',
-                        'res_id': employee.id,
+                        'res_id': record.id,
                         'module': '__export__'
                     })
                 external_id_record = self.env['ir.model.data'].search([
