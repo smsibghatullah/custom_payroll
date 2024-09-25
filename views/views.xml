@@ -20,8 +20,19 @@
                 <field name="month"/>
                 <field name="year"/>
                 <field name="base_salary"/>
-                <field name="total_gross_salary"/>
-                <field name="net_salary"/>
+                <field name="non_taxable_income"/>
+                <field name="sick_pay"/>
+                <field name="bonus"/>
+                <field name="vacation_pay"/>
+                <field name="additional_leave_pay"/>
+                <field name="total_gross_salary" />
+                <field name="tax_relief"/>
+                <field name="deductions"/>
+                <field name="employee_social_contributions"/>
+                <field name="employer_social_contributions"/>
+                <field name="income_tax"/>
+                <field name="advance_payments"/>
+                <field name="net_salary" />
             </tree>
         </field>
     </record>
@@ -59,6 +70,21 @@
             </form>
         </field>
     </record>
+
+     <record id="hr_employee_form_inherit_external_id" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.external_id</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/> 
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='km_home_work']" position="after">
+                <field name="external_id" placeholder="External ID"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
         <!-- <menuitem id="menu_hr_salary_upload_root" name="Employees Salary Distribution" sequence="10"/> -->
     <menuitem id="menu_hr_salary_upload" name="Employees Salary Distribution" parent="hr_payroll.menu_hr_payroll_root" sequence="10" action="action_hr_salary_upload"/>
 

@@ -17,7 +17,7 @@
     'category': 'Human Resources',
     'version': '0.1',
 
-    'depends': ['base', 'hr_payroll'],
+    'depends': ['base', 'hr_payroll', 'hr'],
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',

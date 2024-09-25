@@ -118,3 +118,16 @@ class HrPayslip(models.Model):
                     if salary_upload:
                         line.amount = salary_upload.net_salary
                          
+    
+class HrEmployee(models.Model):
+    _inherit = 'hr.employee'
+
+    external_id = fields.Char(string='External ID', readonly=True, compute='_compute_external_id')
+
+    def _compute_external_id(self):
+       for record in self:
+            external_id_record = self.env['ir.model.data'].search([
+                ('model', '=', 'hr.employee'),
+                ('res_id', '=', record.id)
+            ], limit=1)  
+            record.external_id = external_id_record.name if external_id_record else False
