@@ -130,4 +130,4 @@ class HrEmployee(models.Model):
                 ('model', '=', 'hr.employee'),
                 ('res_id', '=', record.id)
             ], limit=1)  
-            record.external_id = external_id_record.name if external_id_record else False
+            record.external_id = '__export__.'+external_id_record.name if external_id_record else False
