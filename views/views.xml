@@ -76,7 +76,7 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_form"/> 
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='km_home_work']" position="after">
+            <xpath expr="//field[@name='additional_note']" position="after">
                 <field name="external_id" placeholder="External ID"/>
             </xpath>
         </field>
