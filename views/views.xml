@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <menuitem id="menu_hr_salary_upload" name="Employees Salary Distribution" parent="hr_payroll.menu_hr_payroll_root" sequence="10" action="action_hr_salary_upload"/>
+    <!-- Menu item -->
 
+    <!-- Action -->
     <record id="action_hr_salary_upload" model="ir.actions.act_window">
         <field name="name">Salary Upload</field>
         <field name="res_model">hr.salary.upload</field>
         <field name="view_mode">tree,form</field>
         <field name="view_type">form</field>
-        <field name="search_view_id" ref="view_hr_salary_upload_search"/> <!-- Reference to search view -->
     </record>
 
+    <!-- Tree View -->
     <record id="view_hr_salary_upload_tree" model="ir.ui.view">
         <field name="name">hr.salary.upload.tree</field>
         <field name="model">hr.salary.upload</field>
@@ -49,6 +50,7 @@
         </field>
     </record>
 
+    <!-- Form View -->
     <record id="view_hr_salary_upload_form" model="ir.ui.view">
         <field name="name">hr.salary.upload.form</field>
         <field name="model">hr.salary.upload</field>
@@ -75,13 +77,14 @@
                         <field name="income_tax"/>
                         <field name="advance_payments"/>
                         <field name="net_salary" readonly="1"/>
+                        <!-- <field name="occupation_code"/> -->
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="hr_employee_form_inherit_external_id" model="ir.ui.view">
+     <record id="hr_employee_form_inherit_external_id" model="ir.ui.view">
         <field name="name">hr.employee.form.inherit.external_id</field>
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_form"/> 
@@ -92,4 +95,11 @@
         </field>
     </record>
 
+
+
+
+        <!-- <menuitem id="menu_hr_salary_upload_root" name="Employees Salary Distribution" sequence="10"/> -->
+    <menuitem id="menu_hr_salary_upload" name="Employees Salary Distribution" parent="hr_payroll.menu_hr_payroll_root" sequence="10" action="action_hr_salary_upload"/>
+
 </odoo>
+
