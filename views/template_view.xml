@@ -8,13 +8,13 @@
 
                         <div style="display: flex; justify-content: space-between;">
 
-                            <div style="flex: 1; padding: 20px;">
+                            <div style="flex: 1; padding: 10px;">
                                 <h1>Algu aprēķinu un izmaksu saraksts Nr. <t t-esc="o.number"/></h1>
                                 <h1>Par <t t-esc="o.date_from"/> līdz <t t-esc="o.date_to"/></h1>
                                 <p>pensionārs</p>
                             </div>
 
-                            <div style="flex: 1; padding: 20px; text-align: center;">
+                            <div style="flex: 1; padding: 10px; text-align: center;">
                                 <h1 style="text-align: left;">SIA "LABIE KOKI"</h1>
                                 <p style="text-align: left;">Reg. Nr.: 40103166694</p>
                                 <p style="text-align: left;">Annas koku skola, Klīves, Babītes pagasts, Babītes novads</p>
