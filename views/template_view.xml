@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hr_payroll.report_payslip">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="page-break-after: always;">
+
+                        <div style="display: flex; justify-content: space-between;">
+
+                            <div style="flex: 1; padding: 20px;">
+                                <h1>Algu aprēķinu un izmaksu saraksts Nr. <t t-esc="o.number"/></h1>
+                                <h1>Par <t t-esc="o.date_from"/> līdz <t t-esc="o.date_to"/></h1>
+                                <p>pensionārs</p>
+                            </div>
+
+                            <div style="flex: 1; padding: 20px; text-align: center;">
+                                <h1 style="text-align: left;">SIA "LABIE KOKI"</h1>
+                                <p style="text-align: left;">Reg. Nr.: 40103166694</p>
+                                <p style="text-align: left;">Annas koku skola, Klīves, Babītes pagasts, Babītes novads</p>
+                                <p style="text-align: left;">Prokūrists: ________________/ Dzidra Kalniņa       Galvenais grāmatvedis: ________________/ Daiga Jurševica</p>
+                                <p style="text-align: left;">Rīgā, <t t-esc="o.create_date.strftime('%d.%m.%Y')"/></p>
+                            </div>
+                        </div>
+
+
+                        <table class="table table-sm table-bordered">
+                         <thead>
+                                <tr>
+                                    <th>Kods</th>
+                                    <th>Nosaukums</th>
+                                    <th>Daudzums/likme</th>
+                                    <th>Bāzes alga</th>
+                                    <th>Bonuss</th>
+                                    <th>Atvaļinājuma nauda</th>
+                                    <th>Neapliekamie ienākumi</th>
+                                    <th>Kopējā bruto alga</th>
+                                    <th>Nodokļu atvieglojumi</th>
+                                    <th>Atvilkumi</th>
+                                    <th>Neto alga</th>
+                                    <th>Summa</th>
+                                    <th>Kopā</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                <td><span t-field="line.code"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td><span t-field="line.quantity"/></td>
+                                <td><t t-esc="o.salary_upload_id.base_salary"/></td>
+                                <td><t t-esc="o.salary_upload_id.bonus"/></td>
+                                <td><t t-esc="o.salary_upload_id.vacation_pay"/></td>
+                                <td><t t-esc="o.salary_upload_id.non_taxable_income"/></td>
+                                <td><t t-esc="o.salary_upload_id.total_gross_salary"/></td>
+                                <td><t t-esc="o.salary_upload_id.tax_relief"/></td>
+                                <td><t t-esc="o.salary_upload_id.deductions"/></td>
+                                <td><t t-esc="o.salary_upload_id.net_salary"/></td>
+                                <td><span t-esc="line.amount"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                <td><span t-esc="line.total"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+
+                            </tr>
+                        </tbody>
+                        </table>
+
+                        <div class="totals">
+                            <p><strong>Kopā Bruto Alga:</strong> <t t-esc="o.create_date"/> EUR</p>
+                            <p><strong>Kopā Neto Alga Kontā:</strong> <t t-esc="o.create_date"/> EUR</p>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

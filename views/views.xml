@@ -97,6 +97,31 @@
 
 
 
+    <record id="custom_landscape_paperformat" model="report.paperformat">
+        <field name="name">Custom Landscape Paperformat</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field> 
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+    </record>
+
+    <report
+        id="report_payslip_landscape"
+        model="hr.payslip"
+        string="Payslip Report"
+        report_type="qweb-pdf"
+        file="custom_payroll.report_payslip"
+        name="custom_payroll.report_payslip"
+        paperformat="custom_landscape_paperformat" 
+    />
+
+
+
+
+
 
         <!-- <menuitem id="menu_hr_salary_upload_root" name="Employees Salary Distribution" sequence="10"/> -->
     <menuitem id="menu_hr_salary_upload" name="Employees Salary Distribution" parent="hr_payroll.menu_hr_payroll_root" sequence="10" action="action_hr_salary_upload"/>

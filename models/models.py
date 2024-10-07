@@ -50,6 +50,8 @@ class HrSalaryUpload(models.Model):
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
+    salary_upload_id = fields.Many2one('hr.salary.upload', string="Salary Upload")
+
 
     @api.multi
     def compute_sheet(self):
@@ -59,6 +61,8 @@ class HrPayslip(models.Model):
         # After calling the original method, you can apply your custom logic
         for payslip in self:
             salary_upload = self.env['hr.salary.upload'].search([('employee_id', '=', payslip.employee_id.id)], order='id desc',  limit=1)
+            if salary_upload:
+                payslip.salary_upload_id = salary_upload
             # Access the salary rules
             for line in payslip.line_ids:
                 if line.salary_rule_id.code == 'SICK':
