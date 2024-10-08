@@ -8,13 +8,13 @@
 
                         <div style="display: flex; justify-content: space-between;">
 
-                            <div style="flex: 1; padding: 10px; text-align: left;">
+                            <div style="flex: 1; padding: 10px; text-align: left;width:50%">
                                 <h1>Algu aprēķinu un izmaksu saraksts Nr. <t t-esc="o.number"/></h1>
                                 <h1>Par <t t-esc="o.date_from"/> līdz <t t-esc="o.date_to"/></h1>
                                 <p>pensionārs</p>
                             </div>
 
-                            <div style="flex: 1; padding: 10px; text-align: center;">
+                            <div style="flex: 1; padding: 10px; text-align: center;width:50%">
                                 <h1 style="text-align: left;">SIA "LABIE KOKI"</h1>
                                 <p style="text-align: left;">Reg. Nr.: 40103166694</p>
                                 <p style="text-align: left;">Annas koku skola, Klīves, Babītes pagasts, Babītes novads</p>
@@ -24,45 +24,48 @@
                         </div>
 
 
-                        <table class="table table-sm table-bordered">
-                         <thead>
+                      <table class="table table-sm table-bordered">
+                            <thead>
                                 <tr>
-                                    <th>Kods</th>
-                                    <th>Nosaukums</th>
+                                    <!-- Header row for line names -->
+                                    <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                        <th><span t-field="line.name"/></th>
+                                    </t>
                                     <th>Daudzums/likme</th>
-                                    <th>Bāzes alga</th>
-                                    <th>Bonuss</th>
-                                    <th>Atvaļinājuma nauda</th>
-                                    <th>Neapliekamie ienākumi</th>
-                                    <th>Kopējā bruto alga</th>
-                                    <th>Nodokļu atvieglojumi</th>
-                                    <th>Atvilkumi</th>
-                                    <th>Neto alga</th>
                                     <th>Summa</th>
                                     <th>Kopā</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
-                                <td><span t-field="line.code"/></td>
-                                <td><span t-field="line.name"/></td>
-                                <td><span t-field="line.quantity"/></td>
-                                <td><t t-esc="o.salary_upload_id.base_salary"/></td>
-                                <td><t t-esc="o.salary_upload_id.bonus"/></td>
-                                <td><t t-esc="o.salary_upload_id.vacation_pay"/></td>
-                                <td><t t-esc="o.salary_upload_id.non_taxable_income"/></td>
-                                <td><t t-esc="o.salary_upload_id.total_gross_salary"/></td>
-                                <td><t t-esc="o.salary_upload_id.tax_relief"/></td>
-                                <td><t t-esc="o.salary_upload_id.deductions"/></td>
-                                <td><t t-esc="o.salary_upload_id.net_salary"/></td>
-                                <td><span t-esc="line.amount"
-                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
-                                <td><span t-esc="line.total"
-                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                <tr>
+                                    <!-- Show line amounts -->
+                                    <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                        <td>
+                                            <span t-esc="line.amount"
+                                                t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                    </t>
 
-                            </tr>
-                        </tbody>
+                                    <!-- Show quantity, sum of amounts and total amounts -->
+                                    <td>
+                                        <t t-set="total_quantity" t-value="sum(o.line_ids.filtered(lambda line: line.appears_on_payslip).mapped('quantity'))"/>
+                                        <span t-esc="total_quantity"/>
+                                    </td>
+                                    <td>
+                                        <t t-set="total_sum" t-value="sum(o.line_ids.filtered(lambda line: line.appears_on_payslip).mapped('amount'))"/>
+                                        <span t-esc="total_sum"
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                    <td>
+                                        <t t-set="total_total" t-value="sum(o.line_ids.filtered(lambda line: line.appears_on_payslip).mapped('total'))"/>
+                                        <span t-esc="total_total"
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
+
+
 
                         <div class="totals">
                             <p><strong>Kopā Bruto Alga:</strong> <t t-esc="o.create_date"/> EUR</p>
