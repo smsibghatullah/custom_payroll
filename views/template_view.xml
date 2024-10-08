@@ -3,77 +3,61 @@
     <template id="hr_payroll.report_payslip">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-lang="o.employee_id.user_id.lang">
-                    <t t-call="web.external_layout">
-                        <div class="page" style="page-break-after: always;">
+                <t t-call="web.external_layout">
+                    <div class="page" style="page-break-after: always;">
 
-                            <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; justify-content: space-between;">
 
-                                <div style="flex: 1; padding: 10px; text-align: left;width:50%;float:left">
-                                    <h1 t-translation="on">
-                                        <t t-esc=" _('Algu aprēķinu un izmaksu saraksts Nr.') "/> <t t-esc="o.number"/>
-                                    </h1>
-                                    <h1>
-                                        <t t-esc=" _('Par') "/> <t t-esc="o.date_from"/> <t t-esc=" _('līdz') "/> <t t-esc="o.date_to"/>
-                                    </h1>
-                                    <p t-translation="on">pensionārs</p>
-                                </div>
-
-                                <div style="flex: 1; padding: 10px; text-align: right ;width:50%">
-                                    <h1 style="text-align: left;" t-translation="on">SIA "LABIE KOKI"</h1>
-                                    <p style="text-align: left;" t-translation="on">Reg. Nr.: 40103166694</p>
-                                    <p style="text-align: left;" t-translation="on">
-                                        Annas koku skola, Klīves, Babītes pagasts, Babītes novads
-                                    </p>
-                                    <p style="text-align: left;">
-                                        <t t-esc=" _('Prokūrists: ________________/ Dzidra Kalniņa Galvenais grāmatvedis: ________________/ Daiga Jurševica') "/>
-                                    </p>
-                                    <p style="text-align: left;">
-                                        <t t-esc=" _('Rīgā') "/>, <t t-esc="o.create_date.strftime('%d.%m.%Y')"/>
-                                    </p>
-                                </div>
+                            <div style="flex: 1; padding: 10px; text-align: left;width:50%;float:left">
+                                <h1 t-translation="on">Algu aprēķinu un izmaksu saraksts Nr. <t t-esc="o.number"/></h1>
+                                <h1 t-translation="on">Par <t t-esc="o.date_from"/> līdz <t t-esc="o.date_to"/></h1>
+                                <p t-translation="on">pensionārs</p>
                             </div>
 
-                            <!-- Table displaying line items and totals -->
-                            <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
-                                            <th><span t-field="line.name"/></th>
-                                        </t>
-                                        <th t-translation="on">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
-                                            <td>
-                                                <span t-esc="line.amount"
-                                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
-                                            </td>
-                                        </t>
+                            <div style="flex: 1; padding: 10px; text-align: right ;width:50%">
+                                <h1 style="text-align: left;" t-translation="on">SIA "LABIE KOKI"</h1>
+                                <p style="text-align: left;" t-translation="on">Reg. Nr.: 40103166694</p>
+                                <p style="text-align: left;" t-translation="on">Annas koku skola, Klīves, Babītes pagasts, Babītes novads</p>
+                                <p style="text-align: left;" t-translation="on">Prokūrists: ________________/ Dzidra Kalniņa       Galvenais grāmatvedis: ________________/ Daiga Jurševica</p>
+                                <p style="text-align: left;" t-translation="on">Rīgā, <t t-esc="o.create_date.strftime('%d.%m.%Y')"/></p>
+                            </div>
+                        </div>
+
+
+                      <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                        <th><span t-field="line.name"/></th>
+                                    </t>
+                                    <th t-translation="on">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
                                         <td>
-                                            <t t-set="total_total" t-value="sum(o.line_ids.filtered(lambda line: line.appears_on_payslip).mapped('total'))"/>
-                                            <span t-esc="total_total"
+                                            <span t-esc="line.amount"
                                                 t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                                         </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </t>
+                                    <td>
+                                        <t t-set="total_total" t-value="sum(o.line_ids.filtered(lambda line: line.appears_on_payslip).mapped('total'))"/>
+                                        <span t-esc="total_total"
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                            <div class="totals">
-                                <p>
-                                    <strong t-translation="on">Kopā Bruto Alga:</strong>
-                                    <t t-esc="o.create_date"/> EUR
-                                </p>
-                                <p>
-                                    <strong t-translation="on">Kopā Neto Alga Kontā:</strong>
-                                    <t t-esc="o.create_date"/> EUR
-                                </p>
-                            </div>
 
+
+                        <div class="totals">
+                            <p><strong>Kopā Bruto Alga:</strong> <t t-esc="o.create_date"/> EUR</p>
+                            <p><strong>Kopā Neto Alga Kontā:</strong> <t t-esc="o.create_date"/> EUR</p>
                         </div>
-                    </t>
+
+                    </div>
                 </t>
             </t>
         </t>
