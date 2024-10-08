@@ -8,7 +8,7 @@
 
                         <div style="display: flex; justify-content: space-between;">
 
-                            <div style="flex: 1; padding: 10px; text-align: left;width:50%">
+                            <div style="flex: 1; padding: 10px; text-align: left;width:50%;float:left">
                                 <h1>Algu aprēķinu un izmaksu saraksts Nr. <t t-esc="o.number"/></h1>
                                 <h1>Par <t t-esc="o.date_from"/> līdz <t t-esc="o.date_to"/></h1>
                                 <p>pensionārs</p>
