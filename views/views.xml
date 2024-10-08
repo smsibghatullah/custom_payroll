@@ -118,12 +118,6 @@
         paperformat="custom_landscape_paperformat" 
     />
 
-
-
-
-
-
-        <!-- <menuitem id="menu_hr_salary_upload_root" name="Employees Salary Distribution" sequence="10"/> -->
     <menuitem id="menu_hr_salary_upload" name="Employees Salary Distribution" parent="hr_payroll.menu_hr_payroll_root" sequence="10" action="action_hr_salary_upload"/>
 
 </odoo>
